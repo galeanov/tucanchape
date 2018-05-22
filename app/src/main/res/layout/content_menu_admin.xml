@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".activity.MenuAdminActivity"
+    android:id="@+id/escenario"
+    tools:showIn="@layout/app_bar_menu_admin"
+    android:background="#fff">
+
+    <ImageView
+        android:id="@+id/slide_images_ad"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="30dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        app:srcCompat="@drawable/map" />
+
+    <TextView
+        android:id="@+id/slide_heading_ad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/slide_images_ad"
+        android:layout_centerHorizontal="true"
+        android:text="Tu cancha al alcance de todos"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="24sp"
+        android:layout_marginTop="50dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/slide_desc_ad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/slide_heading_ad"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        android:text="Promociona tus servicios, ¿que esperas?, ¡registra tu primera Cancha!"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="20dp" />
+
+
+    <mehdi.sakout.fancybuttons.FancyButton
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/slide_desc_ad"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:onClick="logout"
+        android:paddingBottom="10dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="10dp"
+        fancy:fb_borderColor="#FFFFFF"
+        fancy:fb_borderWidth="1dp"
+        fancy:fb_defaultColor="#00C853"
+        fancy:fb_focusColor="#9bd823"
+        fancy:fb_radius="30dp"
+        android:layout_marginTop="60dp"
+        fancy:fb_text="Registrar Cancha"
+        fancy:fb_textColor="#FFFFFF" />
+
+</RelativeLayout>

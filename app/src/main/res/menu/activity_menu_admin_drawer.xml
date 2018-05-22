@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:checked="true"
+            android:id="@+id/nav_canchas"
+            android:icon="@drawable/percan"
+            android:title="Canchas" />
+
+        <item
+            android:checked="true"
+            android:id="@+id/nav_reserva"
+            android:icon="@drawable/ic_add_alarm_black_24dp"
+            android:title="Reservas" />
+
+        <item
+            android:id="@+id/nav_per"
+            android:icon="@drawable/user"
+            android:title="Negocio" />
+    </group>
+
+    <item android:title="Cerrar Sesión">
+        <menu>
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/exit"
+                android:title="Salir" />
+        </menu>
+    </item>
+
+</menu>

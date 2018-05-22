@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">tucancha.pe</string>
+
+    <string name="facebook_app_id">168811660605020</string>
+    <string name="fb_login_protocol_scheme">fb168811660605020</string>
+
+    <string name="cancel_login">Login cancelado</string>
+    <string name="error_login">No se pudo ingresar</string>
+    <string name="firebase_error_login">No ingresó</string>
+    <string name="title_activity_menu_admin">Menú Admintrador</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">Administrador</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_maps">Map</string>
+
+
+</resources>
