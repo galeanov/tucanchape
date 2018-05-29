@@ -35,8 +35,8 @@ public class User2Fragment extends Fragment {
     DatabaseReference databaseReference;
     FirebaseUser firebaseUser;
     ArrayList<String> fullNameList;
-    ArrayList<String> userNameList;
-    ArrayList<String> profilePicList;
+    ArrayList<String> tel1;
+    ArrayList<String> tel2;
     SearchAdapter searchAdapter;
 
 
@@ -76,8 +76,8 @@ public class User2Fragment extends Fragment {
          * Create a array list for each node you want to use
          * */
         fullNameList = new ArrayList<>();
-        userNameList = new ArrayList<>();
-        profilePicList = new ArrayList<>();
+        tel1 = new ArrayList<>();
+        tel2 = new ArrayList<>();
 
 
         search_edit_text.addTextChangedListener(new TextWatcher() {
@@ -98,8 +98,8 @@ public class User2Fragment extends Fragment {
                      * Clear the list when editText is empty
                      * */
                     fullNameList.clear();
-                    userNameList.clear();
-                    profilePicList.clear();
+                    tel1.clear();
+                    tel2.clear();
                     recyclerView.removeAllViews();
                 }
             }
@@ -118,8 +118,8 @@ public class User2Fragment extends Fragment {
                  * Clear the list for every new search
                  * */
                 fullNameList.clear();
-                userNameList.clear();
-                profilePicList.clear();
+                tel1.clear();
+                tel2.clear();
                 recyclerView.removeAllViews();
 
                 int counter = 0;
@@ -130,13 +130,13 @@ public class User2Fragment extends Fragment {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     String uid = snapshot.getKey();
                     String nombre = snapshot.child("nombre").getValue(String.class);
-                    String user_name = snapshot.child("user_name").getValue(String.class);
-                    String profile_pic = snapshot.child("profile_pic").getValue(String.class);
+                    String tf1 = snapshot.child("telefono1").getValue(String.class);
+                    String tf2 = snapshot.child("telefono2").getValue(String.class);
 
                     if (nombre.toLowerCase().contains(searchedString.toLowerCase())) {
                         fullNameList.add(nombre);
-                        userNameList.add(user_name);
-                        profilePicList.add(profile_pic);
+                        tel1.add(tf1);
+                        tel2.add(tf2);
                         counter++;
                     }
 
@@ -147,7 +147,7 @@ public class User2Fragment extends Fragment {
                         break;
                 }
 
-                searchAdapter = new SearchAdapter(getContext(), fullNameList, userNameList, profilePicList);
+                searchAdapter = new SearchAdapter(getContext(), fullNameList, tel1, tel2);
                 recyclerView.setAdapter(searchAdapter);
             }
 

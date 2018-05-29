@@ -38,19 +38,31 @@ public class PerfilActivity extends AppCompatActivity {
 
     private void getIncomingIntent(){
 
-        if(getIntent().hasExtra("nombre")){
+        if(getIntent().hasExtra("nombre")&& getIntent().hasExtra("telefono1")
+                && getIntent().hasExtra("telefono2")){
 
             String name = getIntent().getStringExtra("nombre");
+        String telu = getIntent().getStringExtra("telefono1");
+        String teld = getIntent().getStringExtra("telefono2");
 
 
-            setPerfil(name);
+
+            setPerfil(name, telu, teld);
+
+
         }
     }
 
-    private void setPerfil(String nombre) {
+    private void setPerfil(String nombre, String telu, String teld) {
 
         TextView name = findViewById(R.id.name_prof);
+        TextView teuno = findViewById(R.id.tel_1_prof);
+        TextView tedos = findViewById(R.id.tel_2_prof);
+
         name.setText(nombre);
+        teuno.setText(telu);
+        tedos.setText(teld);
+
     }
 
 }

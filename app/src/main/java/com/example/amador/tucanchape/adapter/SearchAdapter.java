@@ -23,9 +23,9 @@ import java.util.ArrayList;
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchViewHolder>{
     Context context;
     ArrayList<String> fullNameList;
-    ArrayList<String> userNameList;
-    ArrayList<String> profilePicList;
-    ArrayList<String> telefono1;
+    ArrayList<String> tel1;
+    ArrayList<String> tel2;
+
 
 
 
@@ -41,6 +41,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
             super(itemView);
             profileImage = (ImageView) itemView.findViewById(R.id.profileImage);
             full_name = (TextView) itemView.findViewById(R.id.full_name);
+            //77falta telefnos pero no hace falta mostrar en listado
 
             parentLayout = (LinearLayout)itemView.findViewById(R.id.parent_layout);
 
@@ -48,11 +49,11 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
 
         }
     }
-    public SearchAdapter(Context context, ArrayList<String> fullNameList, ArrayList<String> userNameList, ArrayList<String> profilePicList) {
+    public SearchAdapter(Context context, ArrayList<String> fullNameList, ArrayList<String> tf1, ArrayList<String> tf2) {
         this.context = context;
         this.fullNameList = fullNameList;
-        this.userNameList = userNameList;
-        this.profilePicList = profilePicList;
+        this.tel1 = tf1;
+        this.tel2 = tf2;
     }
 
     @Override
@@ -65,7 +66,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
     @Override
     public void onBindViewHolder(SearchViewHolder holder, final int position) {
         holder.full_name.setText(fullNameList.get(position));
-        Glide.with(context).load(profilePicList.get(position)).asBitmap().placeholder(R.mipmap.ic_launcher_round).into(holder.profileImage);
+
 
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,6 +75,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
 
                 Intent intent = new Intent(context, PerfilActivity.class);
                 intent.putExtra("nombre", fullNameList.get(position));
+                intent.putExtra("telefono1", tel1.get(position));
+                intent.putExtra("telefono2", tel2.get(position));
 
                 context.startActivity(intent);
             }
