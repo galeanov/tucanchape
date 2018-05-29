@@ -40,7 +40,7 @@
         android:layout_centerHorizontal="true"
         android:gravity="center"
         android:layout_marginTop="20dp"
-        android:text="Promociona tus servicios, ¿que esperas?, ¡registra tu primera Cancha!"
+        android:text="Promociona tus servicios ¿que esperas? ¡Registra tu primera Cancha!"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="20dp" />
 

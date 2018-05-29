@@ -13,8 +13,8 @@
 
     <item
         android:id="@+id/nav_3"
-        android:icon="@drawable/loci"
-        android:title="Noticias" />
+        android:icon="@drawable/menuapp"
+        android:title="Menú" />
 
 
 

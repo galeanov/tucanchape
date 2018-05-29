@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.amador.tucanchape.R;
 import com.example.amador.tucanchape.activity.InicioSesionActivity;
+import com.example.amador.tucanchape.activity.PerfilActivity;
 import com.example.amador.tucanchape.firebaseRealTimeDataBase.FirebaseReferences;
 import com.example.amador.tucanchape.model.Empresa;
 import com.google.android.gms.maps.CameraUpdate;
@@ -81,7 +82,14 @@ public class User1Fragment extends Fragment  implements OnMapReadyCallback {
                             .title(nombre)
                             .icon(BitmapDescriptorFactory.fromResource(R.drawable.prueba4)));
 
+                    mGoogleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                        @Override
+                        public void onInfoWindowClick(Marker marker) {
+                            Intent intent = new Intent(getActivity(), PerfilActivity.class);
+                            startActivity(intent);
 
+                        }
+                    });
 
 
                 }
@@ -189,10 +197,9 @@ public class User1Fragment extends Fragment  implements OnMapReadyCallback {
 
     private void AgregarMarcador(double lat, double lng) {
             LatLng coordenadas = new LatLng(lat, lng);
-            CameraUpdate MiUbicacion = CameraUpdateFactory.newLatLngZoom(coordenadas, 15);
+            CameraUpdate MiUbicacion = CameraUpdateFactory.newLatLngZoom(coordenadas, 17);
             if (marcador != null) marcador.remove();
             marcador = mGoogleMap.addMarker(new MarkerOptions()
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.prueba4))
                     .position(coordenadas)
                     .title("Mi Ubicación"));
 
