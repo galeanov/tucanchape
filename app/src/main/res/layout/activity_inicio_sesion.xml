@@ -11,7 +11,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="250dp"
-        android:background="@color/colorPrimary"
         android:orientation="vertical"
         >
 
@@ -30,26 +29,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/slide_images_ad"
-        android:layout_centerHorizontal="true"
-        android:text="Elige tu rol"
-        android:layout_marginLeft="120dp"
+        android:layout_gravity="center_horizontal"
+        android:text="TUCANCHA.PE"
+
         android:textColor="@color/colorPrimaryDark"
         android:textSize="24sp"
-        android:layout_marginTop="270dp"
+        android:layout_marginTop="240dp"
         android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/slide_desc_ad"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/slide_heading_ad"
-        android:layout_centerHorizontal="true"
-        android:gravity="center"
-        android:layout_marginTop="300dp"
-        android:layout_marginLeft="40dp"
-        android:text="Disfruta de nuestras funciones"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="20dp" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -58,20 +44,7 @@
         android:layout_marginTop="350dp"
         android:layout_marginLeft="210dp"
         >
-        <ImageButton
-            android:id="@+id/btn_admin"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:background="@drawable/bordeslugar"
-            android:src="@drawable/local"
 
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Administrador"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"/>
 
     </LinearLayout>
 
@@ -79,24 +52,71 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="350dp"
-        android:layout_marginLeft="60dp">
+        android:layout_marginTop="310dp"
+        android:layout_gravity="center_horizontal">
 
-        <ImageButton
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/loo2"
+            android:layout_gravity="center_horizontal"/>
+
+        <Button
             android:id="@+id/btn_user"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="200dp"
+            android:layout_height="30dp"
             android:background="@drawable/bordeslugar"
-            android:src="@drawable/taba"/>
+            android:text="Buscar canchas"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textColor="@color/cardview_light_background" />
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_prog"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"/>
+
+        <Button
+            android:id="@+id/btn_admin"
+            android:layout_width="200dp"
+            android:layout_height="30dp"
+            android:background="@drawable/bordeslugar"
+            android:text="Registra tu cancha"
+            android:layout_marginTop="5dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textColor="@color/cardview_light_background" />
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="500dp">
+
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pelotero"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
+            android:text="Desarrollado por CreaDev Perú"
+            android:layout_gravity="center_horizontal"
+            android:textSize="15dp"
+            android:textColor="@color/colorPrimaryDark"/>
+        <TextView
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Todos los derechos reservados. 2018"
+            android:layout_gravity="center_horizontal"
+            android:textSize="15dp"
             />
 
     </LinearLayout>
+
+
 
 
 

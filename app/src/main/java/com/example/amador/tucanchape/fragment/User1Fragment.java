@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,6 +74,7 @@ public class User1Fragment extends Fragment  implements OnMapReadyCallback {
                 for (DataSnapshot datasnapshot: dataSnapshot.getChildren()) { //empresas
 
                         Empresa empresa = datasnapshot.getValue(Empresa.class);
+                    final String llave = datasnapshot.getKey();
                         String nombre = empresa.getNombre();
                         double lat = empresa.getLat();
                         double lng = empresa.getLng();
@@ -80,13 +82,27 @@ public class User1Fragment extends Fragment  implements OnMapReadyCallback {
                     mGoogleMap.addMarker(new MarkerOptions()
                             .position(new LatLng(lat, lng))
                             .title(nombre)
+                            .snippet(llave)
                             .icon(BitmapDescriptorFactory.fromResource(R.drawable.prueba4)));
 
                     mGoogleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                         @Override
                         public void onInfoWindowClick(Marker marker) {
-                            Intent intent = new Intent(getActivity(), PerfilActivity.class);
-                            startActivity(intent);
+                            if (marker.getSnippet() !=null){
+                                Intent intent = new Intent(getActivity(),PerfilActivity.class);
+                                String claveone = marker.getSnippet();
+                                intent.putExtra("CLAVEONE",claveone);
+                                startActivity(intent);
+                            }
+
+                            else {
+                                Log.d("Nothing", "no hay nada varon");
+                            }
+
+                            return;
+
+
+
 
                         }
                     });

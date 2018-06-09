@@ -11,13 +11,12 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_marginLeft="16dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="31dp"
         android:contentDescription="@string/nav_header_desc"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
-        app:srcCompat="@drawable/manuser"
-        />
+        app:srcCompat="@drawable/manuser" />
 
     <LinearLayout
         android:paddingTop="10dp"
@@ -29,7 +28,6 @@
         <TextView
             android:layout_marginLeft="16dp"
             android:id="@+id/nameTextView"
-            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:textSize="18sp"
             android:textStyle="bold"

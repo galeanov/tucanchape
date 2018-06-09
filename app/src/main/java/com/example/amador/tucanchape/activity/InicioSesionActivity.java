@@ -4,14 +4,16 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.example.amador.tucanchape.R;
+import com.example.amador.tucanchape.fragment.User1Fragment;
 import com.example.amador.tucanchape.sharedPreferences.AppPreferences;
 
 public class InicioSesionActivity extends AppCompatActivity {
 
-    private ImageButton pel_user, admin;
+    private Button pel_user, admin;
     private AppPreferences prefs;
 
     @Override
@@ -42,6 +44,7 @@ public class InicioSesionActivity extends AppCompatActivity {
                 Intent i = new Intent(InicioSesionActivity.this, MenuUserActivity.class);
                 startActivity(i);
                 finish();
+
             }
         });
     }

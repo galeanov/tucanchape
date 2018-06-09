@@ -108,7 +108,6 @@ public class RegisterUserActivity extends AppCompatActivity {
                                 currentUserDB.child("apellidos").setValue(apellido);
                                 currentUserDB.child("correo").setValue(corr);
 
-
                                 Toast.makeText(RegisterUserActivity.this, "Exito al registrar", Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(RegisterUserActivity.this, "Error al registrarte", Toast.LENGTH_SHORT).show();

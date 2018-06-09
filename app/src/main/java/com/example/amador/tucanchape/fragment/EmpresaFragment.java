@@ -2,6 +2,7 @@ package com.example.amador.tucanchape.fragment;
 
 
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.location.Address;
@@ -15,6 +16,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -29,6 +31,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -38,24 +41,30 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
 import static android.app.Activity.RESULT_OK;
+import static android.content.Context.INPUT_METHOD_SERVICE;
 
 
 public class EmpresaFragment extends Fragment implements OnMapReadyCallback{
 
     private TextView namEmp, tel1Emp, tel2Emp, dirEmp;
     private EditText etTel1Emp, etTel2Emp, etNamEmp;
+    private Button btnPic;
     private ImageView picEmp;
     private DatabaseReference empNodo;
     private GoogleMap mMap;
-    private FirebaseStorage firebaseStorage;
-    private  static  int PICK_IMAGE = 123;
-    Uri imagePath;
+    private StorageReference mStorage;
+
+    private  static  final int PICK_IMAGE_RQUEST = 1;
+    private Uri mImageUri;
+
 
 
 
@@ -86,8 +95,11 @@ public class EmpresaFragment extends Fragment implements OnMapReadyCallback{
         return fragment;
     }
 
+
+
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         final View view = inflater.inflate(R.layout.fragment_empresa, container, false);
 
@@ -111,18 +123,20 @@ public class EmpresaFragment extends Fragment implements OnMapReadyCallback{
         etTel1Emp = view.findViewById(R.id.ed_tel_1_emp);
         etTel2Emp = view.findViewById(R.id.ed_tel_2_emp);
         etNamEmp = view.findViewById(R.id.et_name_empresa);
+        btnPic = view.findViewById(R.id.btn_up);
         picEmp = view.findViewById(R.id.fotoper);
 
-        firebaseStorage = FirebaseStorage.getInstance();
-        StorageReference storageReference = firebaseStorage.getReference();
+        mStorage = FirebaseStorage.getInstance().getReference();
 
-        picEmp.setOnClickListener(new View.OnClickListener() {
+
+        btnPic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Seleccionar imagen"), PICK_IMAGE);
+                startActivityForResult(intent, PICK_IMAGE_RQUEST);
+
             }
         });
 
@@ -163,6 +177,19 @@ public class EmpresaFragment extends Fragment implements OnMapReadyCallback{
         }
 
         return view;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PICK_IMAGE_RQUEST && resultCode == RESULT_OK && data !=null && data.getData() !=null) {
+            mImageUri = data.getData();
+
+            Picasso.get().load(mImageUri).into(picEmp);
+
+
+        }
     }
 
     public void Editar(boolean val){
