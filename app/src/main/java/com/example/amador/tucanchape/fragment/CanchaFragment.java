@@ -20,6 +20,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.amador.tucanchape.R;
+import com.example.amador.tucanchape.activity.CanchaReservaActivity;
 import com.example.amador.tucanchape.adapter.CanchaAdapter;
 import com.example.amador.tucanchape.model.Cancha;
 import com.example.amador.tucanchape.model.Horario;
@@ -122,6 +123,9 @@ public class CanchaFragment extends Fragment implements CanchaAdapter.DeleteCanc
                                     cancha.setName(input.getText().toString());
                                     cancha.setPrecio(Double.valueOf(inputPrecio.getText().toString()));
                                     cancha.setTipo(inputTipo.getText().toString());
+                                    List<Horario> horarios = new ArrayList<>();
+                                    cargarHorariosDefault(horarios);
+                                    cancha.setHorarios(horarios);
                                     items.add(cancha);
                                     if(canchasNodo!=null)
                                         canchasNodo.child("canchas").setValue(items);
@@ -181,11 +185,47 @@ public class CanchaFragment extends Fragment implements CanchaAdapter.DeleteCanc
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
+                    Toast.makeText(getContext(), "Estamos presentando de conexión, le pedimos que lo intente de nuevo", Toast.LENGTH_LONG).show();
+
                 }
             });
         }
 
         return view;
+    }
+
+    private void cargarHorariosDefault(final List<Horario> horarios) {
+        Horario horario1 = new Horario();
+        Horario horario2 = new Horario();
+        Horario horario3 = new Horario();
+        Horario horario4 = new Horario();
+        Horario horario5 = new Horario();
+        Horario horario6 = new Horario();
+
+        horario1.setDesde("7:00 p.m.");
+        horario1.setHasta("7:30 p.m.");
+
+        horario2.setDesde("7:30 p.m.");
+        horario2.setHasta("8:00 p.m.");
+
+        horario3.setDesde("8:00 p.m.");
+        horario3.setHasta("8:30 p.m.");
+
+        horario4.setDesde("8:30 p.m.");
+        horario4.setHasta("9:00 p.m.");
+
+        horario5.setDesde("9:00 p.m.");
+        horario5.setHasta("9:30 p.m.");
+
+        horario6.setDesde("9:30 p.m.");
+        horario6.setHasta("10:00 p.m.");
+
+        horarios.add(horario1);
+        horarios.add(horario2);
+        horarios.add(horario3);
+        horarios.add(horario4);
+        horarios.add(horario5);
+        horarios.add(horario6);
     }
 
 

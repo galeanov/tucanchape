@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Switch;
@@ -23,6 +24,7 @@ public class HorarioReservaAdapter extends RecyclerView.Adapter<HorarioReservaAd
     private Context ctx;
     private String fecha;
     private static HorarioReservadoAdapterListener listener;
+    private boolean visible;
 
     public interface HorarioReservadoAdapterListener{
         void onChangeReserva(int posi, boolean val);
@@ -32,10 +34,11 @@ public class HorarioReservaAdapter extends RecyclerView.Adapter<HorarioReservaAd
         this.listener = listener;
     }
 
-    public HorarioReservaAdapter(Context ctx, final List<Horario> items, String fecha) {
+    public HorarioReservaAdapter(Context ctx, final List<Horario> items, String fecha, boolean visible) {
         this.items = items;
         this.ctx = ctx;
         this.fecha =fecha;
+        this.visible =visible;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -43,7 +46,7 @@ public class HorarioReservaAdapter extends RecyclerView.Adapter<HorarioReservaAd
         TextView horario_name;
         TextView usuario_name;
         ImageView icon_status;
-        Switch sw_status;
+        CheckBox sw_status;
 
         public ViewHolder(final View itemView) {
             super(itemView);
@@ -54,7 +57,7 @@ public class HorarioReservaAdapter extends RecyclerView.Adapter<HorarioReservaAd
 
             sw_status.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onClick(View view) {
                     listener.onChangeReserva(getAdapterPosition(),sw_status.isChecked());
                 }
             });
@@ -72,23 +75,25 @@ public class HorarioReservaAdapter extends RecyclerView.Adapter<HorarioReservaAd
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         Horario item = items.get(position);
 
         holder.horario_name.setText(item.getDesde().toString() + " - " + item.getHasta().toString());
         holder.icon_status.setBackground(ctx.getDrawable(R.drawable.shape_enabled));
         holder.sw_status.setChecked(false);
+        holder.sw_status.setVisibility(visible?View.VISIBLE:View.GONE);
         holder.usuario_name.setVisibility(View.GONE);
 
-        if(item.getReservas()!=null)
-            for(Reserva reserva : item.getReservas()){
-                if(reserva.getFecha().equals(fecha)){
+        if(item.getReservas()!=null) {
+            for (Reserva reserva : item.getReservas()) {
+                if (reserva.getFecha().equals(fecha)) {
                     holder.icon_status.setBackground(ctx.getDrawable(R.drawable.shape_disabled));
                     holder.sw_status.setChecked(true);
                     holder.usuario_name.setText(reserva.getReservado());
                     holder.usuario_name.setVisibility(View.VISIBLE);
                 }
             }
+        }
     }
 
     @Override

@@ -66,20 +66,6 @@ public class EmpresaFragment extends Fragment implements OnMapReadyCallback{
     private Uri mImageUri;
 
 
-
-
-    /*@Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == PICK_IMAGE && resultCode == RESULT_OK && data !=null && data.getData() !=null){
-            imagePath = data.getData();
-            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),imagePath);
-            picEmp.setImageBitmap(bitmap);
-        }
-
-        super.onActivityResult(requestCode, resultCode, data);
-
-    }*/
-
     public EmpresaFragment() {
         // Required empty public constructor
     }
@@ -172,7 +158,9 @@ public class EmpresaFragment extends Fragment implements OnMapReadyCallback{
                 }
 
                 @Override
-                public void onCancelled(DatabaseError databaseError) {}
+                public void onCancelled(DatabaseError databaseError) {
+                    Toast.makeText(getContext(), "Estamos presentando de conexión, le pedimos que lo intente de nuevo", Toast.LENGTH_LONG).show();
+                }
             });
         }
 
@@ -231,7 +219,7 @@ public class EmpresaFragment extends Fragment implements OnMapReadyCallback{
             @Override
             public void onMapClick(LatLng latLng) {
                 empNodo.child("lat").setValue(latLng.latitude);
-                empNodo.child("long").setValue(latLng.longitude);
+                empNodo.child("lng").setValue(latLng.longitude);
             }
         });
 
@@ -245,12 +233,14 @@ public class EmpresaFragment extends Fragment implements OnMapReadyCallback{
         //Obtener la direccion de la calle a partir de la latitud y la longitud
         if (company.latitude != 0.0 && company.longitude != 0.0) {
             try {
-                Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
-                List<Address> list = geocoder.getFromLocation(
-                        company.latitude, company.longitude, 1);
-                if (!list.isEmpty()) {
-                    Address DirCalle = list.get(0);
-                    dirEmp.setText(DirCalle.getAddressLine(0));
+                if(getContext()!=null) {
+                    Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
+                    List<Address> list = geocoder.getFromLocation(
+                            company.latitude, company.longitude, 1);
+                    if (!list.isEmpty()) {
+                        Address DirCalle = list.get(0);
+                        dirEmp.setText(DirCalle.getAddressLine(0));
+                    }
                 }
 
             } catch (IOException e) {

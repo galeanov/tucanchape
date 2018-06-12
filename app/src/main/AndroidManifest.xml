@@ -65,9 +65,8 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
-        <activity android:name=".activity.PerfilActivity" />
-        <activity android:name=".activity.CanchaReserva" />
-        <activity android:name=".activity.ListarCanchas"></activity>
+        <activity android:name=".fragment.PerfilFragment" />
+        <activity android:name=".activity.CanchaReservaActivity" />
     </application>
 
 </manifest>

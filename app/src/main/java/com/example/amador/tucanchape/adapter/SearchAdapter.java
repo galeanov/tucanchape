@@ -1,89 +1,74 @@
 package com.example.amador.tucanchape.adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.media.Image;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.example.amador.tucanchape.R;
-import com.example.amador.tucanchape.activity.PerfilActivity;
+import com.example.amador.tucanchape.model.Empresa;
 
-import java.util.ArrayList;
+import java.util.List;
 
-public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchViewHolder>{
-    Context context;
-    ArrayList<String> fullNameList;
-    ArrayList<String> tel1;
-    ArrayList<String> tel2;
+public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder>{
 
+    private Context context;
+    private List<Empresa> empresas;
+    private OnSearchClick listener;
 
-
-
-
-    class SearchViewHolder extends RecyclerView.ViewHolder {
-        private  ImageView profileImage;
-        private TextView full_name, tel1_emp, tel2_emp;
-        private View.OnClickListener listener;
-        private LinearLayout parentLayout;
-
-
-        public SearchViewHolder(View itemView) {
-            super(itemView);
-            profileImage = (ImageView) itemView.findViewById(R.id.profileImage);
-            full_name = (TextView) itemView.findViewById(R.id.full_name);
-            //77falta telefnos pero no hace falta mostrar en listado
-
-            parentLayout = (LinearLayout)itemView.findViewById(R.id.parent_layout);
-
-
-
-        }
+    public interface OnSearchClick{
+        void onSearch(int posi);
     }
-    public SearchAdapter(Context context, ArrayList<String> fullNameList, ArrayList<String> tf1, ArrayList<String> tf2) {
+
+    public void setListener(OnSearchClick listener) {
+        this.listener = listener;
+    }
+
+    public SearchAdapter(Context context, List<Empresa> empresas) {
         this.context = context;
-        this.fullNameList = fullNameList;
-        this.tel1 = tf1;
-        this.tel2 = tf2;
+        this.empresas = empresas;
     }
 
     @Override
-    public SearchAdapter.SearchViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.list_layout, parent, false);
-        return new SearchAdapter.SearchViewHolder(view);
-
+    public SearchAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.item_search, parent, false);
+        return new SearchAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(SearchViewHolder holder, final int position) {
-        holder.full_name.setText(fullNameList.get(position));
-        holder.parentLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context, fullNameList.get(position), Toast.LENGTH_SHORT).show();
+    public void onBindViewHolder(ViewHolder holder, final int position) {
+        Empresa item = empresas.get(position);
 
-                Intent intent = new Intent(context, PerfilActivity.class);
-                intent.putExtra("nombre", fullNameList.get(position));
-                intent.putExtra("telefono1", tel1.get(position));
-                intent.putExtra("telefono2", tel2.get(position));
-
-                context.startActivity(intent);
-            }
-        });
+        holder.full_name.setText(item.getNombre());
+        holder.tel_1.setText(item.getTelefono1());
+        holder.tel_2.setText(item.getTelefono2());
     }
 
     @Override
     public int getItemCount() {
-        return fullNameList.size();
+        return empresas.size();
+    }
+
+    class ViewHolder extends RecyclerView.ViewHolder {
+
+        TextView full_name;
+        TextView tel_1;
+        TextView tel_2;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            full_name = itemView.findViewById(R.id.full_name);
+            tel_1 = itemView.findViewById(R.id.tel_1);
+            tel_2 = itemView.findViewById(R.id.tel_2);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    listener.onSearch(getAdapterPosition());
+                }
+            });
+        }
     }
 
 

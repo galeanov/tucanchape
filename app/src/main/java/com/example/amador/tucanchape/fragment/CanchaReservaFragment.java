@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.example.amador.tucanchape.R;
 import com.example.amador.tucanchape.adapter.CanchaReservaAdapter;
@@ -39,18 +40,20 @@ public class CanchaReservaFragment extends Fragment implements CanchaReservaAdap
     private CanchaReservaAdapter adapter;
     private RelativeLayout lyEmpty;
     private DatabaseReference canchasNodo;
-    private FirebaseUser user;
+    private String usuarioId;
+    private int fragment;
 
     public CanchaReservaFragment() {
         // Required empty public constructor
     }
 
-    public static CanchaReservaFragment newInstance(/*String param1*/) {
+    public static CanchaReservaFragment newInstance(String usuarioId, int fragmentNew) {
 
         CanchaReservaFragment fragment = new CanchaReservaFragment();
 
         Bundle args = new Bundle();
-        /*args.putString(ARG_PARAM1, param1);*/
+        args.putString("userId", usuarioId);
+        args.putInt("fragment", fragmentNew);
         fragment.setArguments(args);
 
         return fragment;
@@ -64,65 +67,63 @@ public class CanchaReservaFragment extends Fragment implements CanchaReservaAdap
         final View view = inflater.inflate(R.layout.fragment_cancha_reserva, container, false);
 
         if (getArguments() != null) {
-            /*mParam1 = getArguments().getString(ARG_PARAM1);*/
+            usuarioId = getArguments().getString("userId");
+            fragment = getArguments().getInt("fragment");
         }
 
         items = new ArrayList<>();
         rvCanchas = view.findViewById(R.id.rv_canchas);
         lyEmpty = view.findViewById(R.id.ly_empty);
 
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        user = mAuth.getCurrentUser();
+        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                items.clear();
+                for (DataSnapshot postSnapshot : dataSnapshot.child("cancha").getChildren()) { //cancha
+                    if (postSnapshot.child("idusuario").getValue(String.class).equals(usuarioId)) { //si son mis canchas
+                        canchasNodo = postSnapshot.getRef();
+                        for (DataSnapshot postCanchas : postSnapshot.child("canchas").getChildren()) { //canchas
+                            Cancha cancha = new Cancha();
+                            cancha.setName(postCanchas.child("name").getValue(String.class));
+                            cancha.setTipo(postCanchas.child("tipo").getValue(String.class));
+                            cancha.setPrecio(postCanchas.child("precio").getValue(Double.class));
 
-        if (user != null) {
-            DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
-            myRef.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    items.clear();
-                    for (DataSnapshot postSnapshot : dataSnapshot.child("cancha").getChildren()) { //cancha
-                        if (postSnapshot.child("idusuario").getValue(String.class).equals(user.getUid())) { //si son mis canchas
-                            canchasNodo = postSnapshot.getRef();
-                            for (DataSnapshot postCanchas : postSnapshot.child("canchas").getChildren()) { //canchas
-                                Cancha cancha = new Cancha();
-                                cancha.setName(postCanchas.child("name").getValue(String.class));
-                                cancha.setTipo(postCanchas.child("tipo").getValue(String.class));
-                                cancha.setPrecio(postCanchas.child("precio").getValue(Double.class));
+                            List<Horario> horarios = new ArrayList<>();
+                            for (DataSnapshot postHorarios : postCanchas.child("horarios").getChildren()) { //horarios de chancgas
+                                Horario horario = new Horario();
+                                horario.setDesde(postHorarios.child("desde").getValue(String.class));
+                                horario.setHasta(postHorarios.child("hasta").getValue(String.class));
+                                horarios.add(horario);
 
-                                List<Horario> horarios = new ArrayList<>();
-                                for (DataSnapshot postHorarios : postCanchas.child("horarios").getChildren()) { //horarios de chancgas
-                                    Horario horario = new Horario();
-                                    horario.setDesde(postHorarios.child("desde").getValue(String.class));
-                                    horario.setHasta(postHorarios.child("hasta").getValue(String.class));
-                                    horarios.add(horario);
-
-                                    List<Reserva> reservas = new ArrayList<>();
-                                    for (DataSnapshot postReserva : postHorarios.child("reservas").getChildren()) { //horarios de chancgas
-                                        Reserva reserva = new Reserva();
-                                        reserva.setFecha(postReserva.child("fecha").getValue(String.class));
-                                        reserva.setReservado(postReserva.child("reservado").getValue(String.class));
-                                        reservas.add(reserva);
-                                    }
-                                    horario.setReservas(reservas);
+                                List<Reserva> reservas = new ArrayList<>();
+                                for (DataSnapshot postReserva : postHorarios.child("reservas").getChildren()) { //horarios de chancgas
+                                    Reserva reserva = new Reserva();
+                                    reserva.setFecha(postReserva.child("fecha").getValue(String.class));
+                                    reserva.setReservado(postReserva.child("reservado").getValue(String.class));
+                                    reservas.add(reserva);
                                 }
-                                cancha.setHorarios(horarios);
-                                items.add(cancha);
+                                horario.setReservas(reservas);
                             }
+                            cancha.setHorarios(horarios);
+                            items.add(cancha);
                         }
                     }
-                    adapter = new CanchaReservaAdapter(getContext(),items);
-                    adapter.setInteface(CanchaReservaFragment.this);
-                    rvCanchas.setAdapter(adapter);
-                    rvCanchas.setLayoutManager(new LinearLayoutManager(getContext()));
-                    evaluateList();
                 }
+                adapter = new CanchaReservaAdapter(getContext(),items);
+                adapter.setInteface(CanchaReservaFragment.this);
+                rvCanchas.setAdapter(adapter);
+                rvCanchas.setLayoutManager(new LinearLayoutManager(getContext()));
+                evaluateList();
+            }
 
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                }
-            });
-        }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(getContext(), "Estamos presentando de conexión, le pedimos que lo intente de nuevo", Toast.LENGTH_LONG).show();
+            }
+        });
+
 
         return view;
     }
@@ -136,9 +137,9 @@ public class CanchaReservaFragment extends Fragment implements CanchaReservaAdap
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         android.support.v4.app.FragmentManager manager = getFragmentManager();
-                        HorariosReservaFragment horariosReservaFragment = HorariosReservaFragment.newInstance(items.get(posi).getHorarios(), posi, dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                        HorariosReservaFragment horariosReservaFragment = HorariosReservaFragment.newInstance(items.get(posi).getHorarios(), posi, dayOfMonth + "/" + (monthOfYear + 1) + "/" + year, fragment == R.id.escenario);
                         horariosReservaFragment.setListener(CanchaReservaFragment.this);
-                        manager.beginTransaction().add(R.id.escenario, horariosReservaFragment).commit();
+                        manager.beginTransaction().add(fragment, horariosReservaFragment).commit();
                     }
                 }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
         picker.show();

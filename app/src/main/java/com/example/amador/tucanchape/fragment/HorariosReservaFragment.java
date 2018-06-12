@@ -36,6 +36,7 @@ public class HorariosReservaFragment extends Fragment implements HorarioReservaA
     private int posi;
     private String fecha;
     private HorarioReservaFragmentListener listener;
+    private boolean visible;
 
 
     public interface HorarioReservaFragmentListener{
@@ -50,7 +51,7 @@ public class HorariosReservaFragment extends Fragment implements HorarioReservaA
         // Required empty public constructor
     }
 
-    public static HorariosReservaFragment newInstance(final List<Horario> items, final int posi, String fecha) {
+    public static HorariosReservaFragment newInstance(final List<Horario> items, final int posi, String fecha, boolean visible) {
 
         HorariosReservaFragment fragment = new HorariosReservaFragment();
 
@@ -58,6 +59,7 @@ public class HorariosReservaFragment extends Fragment implements HorarioReservaA
         args.putSerializable("horarios", (Serializable) items);
         args.putInt("posi", posi);
         args.putString("fecha", fecha);
+        args.putBoolean("visible", visible);
         fragment.setArguments(args);
 
         return fragment;
@@ -74,8 +76,9 @@ public class HorariosReservaFragment extends Fragment implements HorarioReservaA
             items = (List<Horario>) getArguments().getSerializable("horarios");
             posi = getArguments().getInt("posi");
             fecha = getArguments().getString("fecha");
+            visible = getArguments().getBoolean("visible");
         }
-        adapter = new HorarioReservaAdapter(getContext(),items, fecha);
+        adapter = new HorarioReservaAdapter(getContext(),items, fecha, visible);
         adapter.setListener(this);
         rvHorarios = view.findViewById(R.id.rv_horarios);
         rvHorarios.setAdapter(adapter);

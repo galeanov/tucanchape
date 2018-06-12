@@ -5,22 +5,22 @@ import java.io.Serializable;
 public class Empresa implements Serializable{
 
     private String nombre;
-    private String direccion;
     private String telefono1;
     private String telefono2;
-    private String uid;
+    private String idusuario;
+    private String userAdmin;
     private double lat;
     private double lng;
 
     public Empresa() {
     }
 
-    public Empresa(String nombre, String direccion, String telefono1, String telefono2, String uid, double lat, double lng) {
+    public Empresa(String nombre, String telefono1, String telefono2, String idusuario, String userAdmin, double lat, double lng) {
         this.nombre = nombre;
-        this.direccion = direccion;
         this.telefono1 = telefono1;
         this.telefono2 = telefono2;
-        this.uid = uid;
+        this.idusuario = idusuario;
+        this.userAdmin = userAdmin;
         this.lat = lat;
         this.lng = lng;
     }
@@ -31,14 +31,6 @@ public class Empresa implements Serializable{
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
     }
 
     public String getTelefono1() {
@@ -57,12 +49,20 @@ public class Empresa implements Serializable{
         this.telefono2 = telefono2;
     }
 
-    public String getUid() {
-        return uid;
+    public String getIdusuario() {
+        return idusuario;
     }
 
-    public void setUid(String uid) {
-        this.uid = uid;
+    public void setIdusuario(String idusuario) {
+        this.idusuario = idusuario;
+    }
+
+    public String getUserAdmin() {
+        return userAdmin;
+    }
+
+    public void setUserAdmin(String userAdmin) {
+        this.userAdmin = userAdmin;
     }
 
     public double getLat() {
@@ -85,10 +85,12 @@ public class Empresa implements Serializable{
     public String toString() {
         return "Empresa{" +
                 "nombre='" + nombre + '\'' +
-                ", direccion='" + direccion + '\'' +
                 ", telefono1='" + telefono1 + '\'' +
                 ", telefono2='" + telefono2 + '\'' +
-                ", uid='" + uid + '\'' +
+                ", idusuario='" + idusuario + '\'' +
+                ", userAdmin='" + userAdmin + '\'' +
+                ", lat=" + lat +
+                ", lng=" + lng +
                 '}';
     }
 }

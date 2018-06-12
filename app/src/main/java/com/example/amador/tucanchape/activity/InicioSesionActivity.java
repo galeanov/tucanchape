@@ -5,10 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 
 import com.example.amador.tucanchape.R;
-import com.example.amador.tucanchape.fragment.User1Fragment;
 import com.example.amador.tucanchape.sharedPreferences.AppPreferences;
 
 public class InicioSesionActivity extends AppCompatActivity {
