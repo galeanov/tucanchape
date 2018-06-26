@@ -6,13 +6,15 @@ public class Reserva implements Serializable{
 
     private String fecha;
     private String reservado;
+    private String siglas;
 
     public Reserva() {
     }
 
-    public Reserva(String fecha, String reservado) {
+    public Reserva(String fecha, String reservado, String siglas) {
         this.fecha = fecha;
         this.reservado = reservado;
+        this.siglas = siglas;
     }
 
     public String getFecha() {
@@ -31,11 +33,20 @@ public class Reserva implements Serializable{
         this.reservado = reservado;
     }
 
+    public String getSiglas() {
+        return siglas;
+    }
+
+    public void setSiglas(String siglas) {
+        this.siglas = siglas;
+    }
+
     @Override
     public String toString() {
         return "Reserva{" +
                 "fecha='" + fecha + '\'' +
                 ", reservado='" + reservado + '\'' +
+                ", siglas='" + siglas + '\'' +
                 '}';
     }
 }

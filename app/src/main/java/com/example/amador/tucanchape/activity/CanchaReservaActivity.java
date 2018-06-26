@@ -7,10 +7,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.example.amador.tucanchape.R;
 import com.example.amador.tucanchape.adapter.CanchaReservaAdapter;
-import com.example.amador.tucanchape.fragment.CanchaReservaFragment;
 import com.example.amador.tucanchape.model.Cancha;
 import com.example.amador.tucanchape.model.Horario;
 import com.example.amador.tucanchape.model.Reserva;
@@ -25,7 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CanchaReserva extends AppCompatActivity implements CanchaReservaAdapter.DeleteCancha{
+public class CanchaReservaActivity extends AppCompatActivity implements CanchaReservaAdapter.DeleteCancha{
 
     private List<Cancha> items;
     private RecyclerView rvCanchas;
@@ -60,7 +60,8 @@ public class CanchaReserva extends AppCompatActivity implements CanchaReservaAda
                                 Cancha cancha = new Cancha();
                                 cancha.setName(postCanchas.child("name").getValue(String.class));
                                 cancha.setTipo(postCanchas.child("tipo").getValue(String.class));
-                                cancha.setPrecio(postCanchas.child("precio").getValue(Double.class));
+                                cancha.setPrecioD(postCanchas.child("precioD").getValue(Double.class));
+                                cancha.setPrecioN(postCanchas.child("precioN").getValue(Double.class));
 
                                 List<Horario> horarios = new ArrayList<>();
                                 for (DataSnapshot postHorarios : postCanchas.child("horarios").getChildren()) { //horarios de chancgas
@@ -84,7 +85,7 @@ public class CanchaReserva extends AppCompatActivity implements CanchaReservaAda
                         }
                     }
                     adapter = new CanchaReservaAdapter(context,items);
-                    adapter.setInteface(CanchaReserva.this);
+                    adapter.setInteface(CanchaReservaActivity.this);
                     rvCanchas.setAdapter(adapter);
                     rvCanchas.setLayoutManager(new LinearLayoutManager(context));
                     evaluateList();
@@ -93,6 +94,7 @@ public class CanchaReserva extends AppCompatActivity implements CanchaReservaAda
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
+                    Toast.makeText(CanchaReservaActivity.this, "Estamos presentando de conexión, le pedimos que lo intente de nuevo", Toast.LENGTH_LONG).show();
                 }
             });
         }

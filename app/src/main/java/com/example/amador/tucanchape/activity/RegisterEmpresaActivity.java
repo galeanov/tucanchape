@@ -134,7 +134,7 @@ public class RegisterEmpresaActivity extends AppCompatActivity implements Google
             currentUserDB.child("lng").setValue(location!=null?location.getLongitude():0.0);
             Toast.makeText(RegisterEmpresaActivity.this,"Exito al registrar tu empresa",Toast.LENGTH_SHORT).show();
         }else{
-            Toast.makeText(RegisterEmpresaActivity.this,"Error al crear el evento :( ...",Toast.LENGTH_SHORT).show();
+            Toast.makeText(RegisterEmpresaActivity.this,"Campos vacíos",Toast.LENGTH_SHORT).show();
         }
 
     }

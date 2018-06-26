@@ -7,7 +7,65 @@
     android:background="#FFF"
     tools:context=".fragment.CanchaFragment">
 
-    <include layout="@layout/content_horario_reserva" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/colorPrimaryDark">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Horarios"
+            android:textSize="18dp"
+            android:textColor="@color/cardview_light_background"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="40dp"
+        android:background="#f5f5f5"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="40dp"
+            android:background="@drawable/c_rojo"/>
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:textColor="#616161"
+            android:text="Ocupado"
+            android:textSize="16dp"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal"/>
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="40dp"
+            android:background="@drawable/c_verder"/>
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:textColor="#616161"
+            android:text="Disponible"
+            android:textSize="16dp"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal"/>
+
+    </LinearLayout>
+
+
+    <include
+        layout="@layout/content_horario_reserva"/>
 
 
 </android.support.design.widget.CoordinatorLayout>

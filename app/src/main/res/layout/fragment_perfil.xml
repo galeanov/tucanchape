@@ -5,11 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.PerfilActivity"
+    tools:context=".fragment.PerfilFragment"
     android:orientation="vertical"
     android:background="#fff">
-
-    <!-- TODO: Update blank fragment layout -->
 
     <LinearLayout
             android:layout_width="match_parent"
@@ -26,18 +24,6 @@
                 android:layout_marginTop="5dp"
                 android:src="@drawable/company"
                 android:tint="@color/colorwhite" />
-
-            <TextView
-                android:id="@+id/name_prof"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:text="Nombre del Negocio"
-                android:textColor="#ffff"
-                android:textSize="21sp"
-                android:textStyle="bold" />
         <TextView
             android:id="@+id/get_id"
             android:layout_width="wrap_content"
@@ -102,16 +88,10 @@
 
                 <ImageView
                     android:id="@+id/call_send"
-                    android:onClick="callContact"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:src="@drawable/sendcall"
                     android:layout_marginLeft="5dp"/>
-
-
-
-
-
 
             </LinearLayout>
             <View
@@ -146,7 +126,6 @@
                     android:textSize="18dp" />
                 <ImageView
                     android:id="@+id/call_send2"
-                    android:onClick="callContact1"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:src="@drawable/sendcall"
@@ -197,9 +176,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_gravity="center_horizontal"
-
-        >
+        android:layout_gravity="center_horizontal">
 
         <Button
             android:id="@+id/btn_hor"

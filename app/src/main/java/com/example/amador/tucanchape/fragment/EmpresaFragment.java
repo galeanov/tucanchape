@@ -1,8 +1,10 @@
 package com.example.amador.tucanchape.fragment;
 
 
+import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.location.Address;
@@ -16,6 +18,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -44,6 +47,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
@@ -52,33 +56,19 @@ import static android.app.Activity.RESULT_OK;
 import static android.content.Context.INPUT_METHOD_SERVICE;
 
 
-public class EmpresaFragment extends Fragment implements OnMapReadyCallback{
+public class EmpresaFragment extends Fragment implements OnMapReadyCallback {
 
     private TextView namEmp, tel1Emp, tel2Emp, dirEmp;
     private EditText etTel1Emp, etTel2Emp, etNamEmp;
-    private Button btnPic;
+
     private ImageView picEmp;
     private DatabaseReference empNodo;
     private GoogleMap mMap;
-    private StorageReference mStorage;
+    public static final String FB_STORAGE_PATH = "image/";
 
-    private  static  final int PICK_IMAGE_RQUEST = 1;
-    private Uri mImageUri;
+    private static final int REQUEST_CODE = 1234;
+    private Uri imgUri;
 
-
-
-
-    /*@Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == PICK_IMAGE && resultCode == RESULT_OK && data !=null && data.getData() !=null){
-            imagePath = data.getData();
-            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),imagePath);
-            picEmp.setImageBitmap(bitmap);
-        }
-
-        super.onActivityResult(requestCode, resultCode, data);
-
-    }*/
 
     public EmpresaFragment() {
         // Required empty public constructor
@@ -96,8 +86,6 @@ public class EmpresaFragment extends Fragment implements OnMapReadyCallback{
     }
 
 
-
-
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -111,7 +99,7 @@ public class EmpresaFragment extends Fragment implements OnMapReadyCallback{
             FragmentManager fragmentManager = getFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             mapfragment = SupportMapFragment.newInstance();
-            fragmentTransaction.replace(R.id.map,mapfragment).commit();
+            fragmentTransaction.replace(R.id.map, mapfragment).commit();
         }
         mapfragment.getMapAsync(this);
 
@@ -123,23 +111,33 @@ public class EmpresaFragment extends Fragment implements OnMapReadyCallback{
         etTel1Emp = view.findViewById(R.id.ed_tel_1_emp);
         etTel2Emp = view.findViewById(R.id.ed_tel_2_emp);
         etNamEmp = view.findViewById(R.id.et_name_empresa);
-        btnPic = view.findViewById(R.id.btn_up);
         picEmp = view.findViewById(R.id.fotoper);
 
-        mStorage = FirebaseStorage.getInstance().getReference();
 
-
-        btnPic.setOnClickListener(new View.OnClickListener() {
+        picEmp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(intent, PICK_IMAGE_RQUEST);
+                final CharSequence[] opciones = {"Tomar foto", "Cargar Imagen", "Cancelar"};
+                final AlertDialog.Builder alertOpciones = new AlertDialog.Builder(getActivity());
+                alertOpciones.setTitle("Seleccione una opción");
+                alertOpciones.setItems(opciones, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        if (opciones[i].equals("Tomar foto")) {
+
+                        } else {
+                            if (opciones[i].equals("Cargar imagen")) {
+                                carfoto();
+                            } else {
+                                dialogInterface.dismiss();
+                            }
+                        }
+                    }
+                });
+                alertOpciones.show();
 
             }
         });
-
 
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -150,8 +148,8 @@ public class EmpresaFragment extends Fragment implements OnMapReadyCallback{
             myRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    for (DataSnapshot postSnapshot: dataSnapshot.child("empresa").getChildren()) { //empresas
-                        if(postSnapshot.child("idusuario").getValue(String.class).equals(user.getUid())){
+                    for (DataSnapshot postSnapshot : dataSnapshot.child("empresa").getChildren()) { //empresas
+                        if (postSnapshot.child("idusuario").getValue(String.class).equals(user.getUid())) {
                             empNodo = postSnapshot.getRef();
                             namEmp.setText(postSnapshot.child("nombre").getValue(String.class));
                             tel1Emp.setText(postSnapshot.child("telefono1").getValue(String.class));
@@ -161,7 +159,7 @@ public class EmpresaFragment extends Fragment implements OnMapReadyCallback{
                             etTel1Emp.setText(postSnapshot.child("telefono1").getValue(String.class));
                             etTel2Emp.setText(postSnapshot.child("telefono2").getValue(String.class));
 
-                            if(postSnapshot.child("lat").getValue(Double.class)!=0){
+                            if (postSnapshot.child("lat").getValue(Double.class) != 0) {
                                 mMap.clear();
                                 Direction(postSnapshot.child("lat").getValue(Double.class), postSnapshot.child("lng").getValue(Double.class));
                             }
@@ -172,21 +170,46 @@ public class EmpresaFragment extends Fragment implements OnMapReadyCallback{
                 }
 
                 @Override
-                public void onCancelled(DatabaseError databaseError) {}
+                public void onCancelled(DatabaseError databaseError) {
+                    Toast.makeText(getContext(), "Estamos presentando de conexión, le pedimos que lo intente de nuevo", Toast.LENGTH_LONG).show();
+                }
             });
         }
 
         return view;
     }
 
+    private void carfoto() {
+        Intent intent = new Intent();
+        intent.setType("image/");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Seleccionar imagen"), REQUEST_CODE);
+
+    }
+
+    public String getImageText(Uri uri) {
+        ContentResolver contentResolver = getActivity().getContentResolver();
+        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
+
+    }
+
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == PICK_IMAGE_RQUEST && resultCode == RESULT_OK && data !=null && data.getData() !=null) {
-            mImageUri = data.getData();
+        if (requestCode == REQUEST_CODE && requestCode == RESULT_OK && data != null && data.getData() !=null){
+            imgUri = data.getData();
+            try {
+                Bitmap bm = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), imgUri);
+                picEmp.setImageBitmap(bm);
+            }catch (FileNotFoundException e){
+                e.printStackTrace();
 
-            Picasso.get().load(mImageUri).into(picEmp);
+            }catch (IOException e){
+                e.printStackTrace();
+            }
 
 
         }
@@ -231,7 +254,7 @@ public class EmpresaFragment extends Fragment implements OnMapReadyCallback{
             @Override
             public void onMapClick(LatLng latLng) {
                 empNodo.child("lat").setValue(latLng.latitude);
-                empNodo.child("long").setValue(latLng.longitude);
+                empNodo.child("lng").setValue(latLng.longitude);
             }
         });
 
@@ -245,12 +268,14 @@ public class EmpresaFragment extends Fragment implements OnMapReadyCallback{
         //Obtener la direccion de la calle a partir de la latitud y la longitud
         if (company.latitude != 0.0 && company.longitude != 0.0) {
             try {
-                Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
-                List<Address> list = geocoder.getFromLocation(
-                        company.latitude, company.longitude, 1);
-                if (!list.isEmpty()) {
-                    Address DirCalle = list.get(0);
-                    dirEmp.setText(DirCalle.getAddressLine(0));
+                if(getContext()!=null) {
+                    Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
+                    List<Address> list = geocoder.getFromLocation(
+                            company.latitude, company.longitude, 1);
+                    if (!list.isEmpty()) {
+                        Address DirCalle = list.get(0);
+                        dirEmp.setText(DirCalle.getAddressLine(0));
+                    }
                 }
 
             } catch (IOException e) {

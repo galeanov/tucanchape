@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/icon"
             android:layout_toLeftOf="@+id/icon_delete"
-            android:layout_centerVertical="true"
+            android:layout_marginTop="10dp"
             android:orientation="vertical">
 
             <TextView
@@ -35,16 +35,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Cancha"
+                android:textColor="@color/colorPrimaryDark"
                 android:textSize="14dp"
                 android:textStyle="bold"/>
 
-            <TextView
-                android:id="@+id/cancha_precio"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="S./20"
-                android:textSize="12dp"
-                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/cancha_tipo"
@@ -53,6 +47,60 @@
                 android:text="Tipo 1"
                 android:textSize="12dp"
                 android:textStyle="bold"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="200dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="45dp"
+            android:layout_toRightOf="@+id/icon"
+            android:layout_toLeftOf="@+id/icon_delete"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:text="Precio Día: "
+                android:textSize="12dp"
+                android:textStyle="bold"
+                android:layout_marginLeft="17dp"/>
+            <TextView
+                android:id="@+id/canchaD"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:text="S./20"
+                android:textSize="12dp"
+                android:textStyle="bold"/>
+
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="200dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="60dp"
+            android:layout_toRightOf="@+id/icon"
+            android:layout_toLeftOf="@+id/icon_delete"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:layout_width="81dp"
+                android:layout_height="wrap_content"
+                android:text="Precio Noche: "
+                android:textSize="12dp"
+                android:textStyle="bold"
+                android:layout_marginLeft="17dp"/>
+            <TextView
+                android:id="@+id/canchaN"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:text="S./80"
+                android:textSize="12dp"
+                android:textStyle="bold"/>
+
+
+
         </LinearLayout>
 
         <ImageView

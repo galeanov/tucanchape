@@ -20,6 +20,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.amador.tucanchape.R;
+import com.example.amador.tucanchape.activity.CanchaReservaActivity;
 import com.example.amador.tucanchape.adapter.CanchaAdapter;
 import com.example.amador.tucanchape.model.Cancha;
 import com.example.amador.tucanchape.model.Horario;
@@ -87,7 +88,8 @@ public class CanchaFragment extends Fragment implements CanchaAdapter.DeleteCanc
             @Override
             public void onClick(View view) {
                 final EditText input = new EditText(getContext());
-                final EditText inputPrecio = new EditText(getContext());
+                final EditText inputPrecioD = new EditText(getContext());
+                final EditText inputPrecioN = new EditText(getContext());
                 final EditText inputTipo = new EditText(getContext());
 
                 LinearLayout layout = new LinearLayout(getContext());
@@ -98,15 +100,19 @@ public class CanchaFragment extends Fragment implements CanchaAdapter.DeleteCanc
                         LinearLayout.LayoutParams.MATCH_PARENT);
 
                 input.setLayoutParams(lp);
-                input.setHint("Nombre");
-                inputPrecio.setLayoutParams(lp);
-                inputPrecio.setInputType(InputType.TYPE_CLASS_NUMBER);
-                inputPrecio.setHint("Precio");
+                input.setHint("Nombre: Cancha 1");
+                inputPrecioD.setLayoutParams(lp);
+                inputPrecioD.setInputType(InputType.TYPE_CLASS_NUMBER);
+                inputPrecioD.setHint("Precio en el Día");
+                inputPrecioN.setLayoutParams(lp);
+                inputPrecioN.setInputType(InputType.TYPE_CLASS_NUMBER);
+                inputPrecioN.setHint("Precio en la Noche");
                 inputTipo.setLayoutParams(lp);
-                inputTipo.setHint("Tipo");
+                inputTipo.setHint("Tipo de cancha");
 
                 layout.addView(input);
-                layout.addView(inputPrecio);
+                layout.addView(inputPrecioD);
+                layout.addView(inputPrecioN);
                 layout.addView(inputTipo);
 
                 new AlertDialog.Builder(getContext())
@@ -117,11 +123,15 @@ public class CanchaFragment extends Fragment implements CanchaAdapter.DeleteCanc
                         .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                if(!input.getText().toString().equals("") && !inputPrecio.getText().toString().equals("") && !inputTipo.getText().toString().equals("")){
+                                if(!input.getText().toString().equals("") && !inputPrecioD.getText().toString().equals("") && !inputPrecioN.getText().toString().equals("") && !inputTipo.getText().toString().equals("")){
                                     Cancha cancha = new Cancha();
                                     cancha.setName(input.getText().toString());
-                                    cancha.setPrecio(Double.valueOf(inputPrecio.getText().toString()));
+                                    cancha.setPrecioD(Double.valueOf(inputPrecioD.getText().toString()));
+                                    cancha.setPrecioN(Double.valueOf(inputPrecioN.getText().toString()));
                                     cancha.setTipo(inputTipo.getText().toString());
+                                    List<Horario> horarios = new ArrayList<>();
+                                    cargarHorariosDefault(horarios);
+                                    cancha.setHorarios(horarios);
                                     items.add(cancha);
                                     if(canchasNodo!=null)
                                         canchasNodo.child("canchas").setValue(items);
@@ -156,7 +166,8 @@ public class CanchaFragment extends Fragment implements CanchaAdapter.DeleteCanc
                                 Cancha cancha = new Cancha();
                                 cancha.setName(postCanchas.child("name").getValue(String.class));
                                 cancha.setTipo(postCanchas.child("tipo").getValue(String.class));
-                                cancha.setPrecio(postCanchas.child("precio").getValue(Double.class));
+                                cancha.setPrecioD(postCanchas.child("precioD").getValue(Double.class));
+                                cancha.setPrecioN(postCanchas.child("precioN").getValue(Double.class));
 
                                 List<Horario> horarios = new ArrayList<>();
                                 for (DataSnapshot postHorarios : postCanchas.child("horarios").getChildren()) { //horarios de chancgas
@@ -181,11 +192,129 @@ public class CanchaFragment extends Fragment implements CanchaAdapter.DeleteCanc
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
+                    Toast.makeText(getContext(), "Estamos presentando de conexión, le pedimos que lo intente de nuevo", Toast.LENGTH_LONG).show();
+
                 }
             });
         }
 
         return view;
+    }
+
+    private void cargarHorariosDefault(final List<Horario> horarios) {
+        Horario horario1 = new Horario();
+        Horario horario2 = new Horario();
+        Horario horario3 = new Horario();
+        Horario horario4 = new Horario();
+        Horario horario5 = new Horario();
+        Horario horario6 = new Horario();
+        Horario horario7 = new Horario();
+        Horario horario8 = new Horario();
+        Horario horario9 = new Horario();
+        Horario horario10 = new Horario();
+        Horario horario11 = new Horario();
+        Horario horario12 = new Horario();
+        Horario horario13 = new Horario();
+        Horario horario14 = new Horario();
+        Horario horario15 = new Horario();
+        Horario horario16 = new Horario();
+        Horario horario17 = new Horario();
+        Horario horario18 = new Horario();
+        Horario horario19 = new Horario();
+        Horario horario20 = new Horario();
+        Horario horario21 = new Horario();
+
+
+
+
+        horario1.setDesde("5:00 a.m");
+        horario1.setHasta("6:00 a.m");
+
+        horario2.setDesde("6:00 a.m");
+        horario2.setHasta("7:00 a.m");
+
+        horario3.setDesde("7:00 a.m");
+        horario3.setHasta("8:00 a.m");
+
+        horario4.setDesde("8:00 a.m");
+        horario4.setHasta("9:00 a.m");
+
+        horario5.setDesde("9:00 a.m");
+        horario5.setHasta("10:00 a.m");
+
+        horario6.setDesde("10:00 a.m");
+        horario6.setHasta("11:00 a.m");
+
+        horario7.setDesde("11:00 a.m");
+        horario7.setHasta("12:00 p.m");
+
+        horario8.setDesde("12:00 p.m");
+        horario8.setHasta("1:00 p.m");
+
+        horario9.setDesde("1:00 p.m");
+        horario9.setHasta("2:00 p.m.");
+
+        horario10.setDesde("2:00 p.m");
+        horario10.setHasta("3:00 p.m");
+
+        horario11.setDesde("3:00 p.m");
+        horario11.setHasta("4:00 p.m");
+
+        horario12.setDesde("4:00 p.m");
+        horario12.setHasta("5:00 p.m");
+
+        horario13.setDesde("5:00 p.m");
+        horario13.setHasta("6:00 p.m");
+
+        horario14.setDesde("6:00 p.m");
+        horario14.setHasta("7:00 p.m");
+
+        horario15.setDesde("7:00 p.m");
+        horario15.setHasta("8:00 p.m");
+
+        horario16.setDesde("8:00 p.m");
+        horario16.setHasta("9:00 p.m");
+
+        horario17.setDesde("9:00 p.m");
+        horario17.setHasta("10:00 a.m");
+
+        horario18.setDesde("10:00 p.m");
+        horario18.setHasta("11:00 p.m");
+
+        horario19.setDesde("11:00 p.m");
+        horario19.setHasta("12:00 a.m");
+
+        horario19.setDesde("12:00 a.m");
+        horario19.setHasta("1:00 a.m");
+
+        horario20.setDesde("1:00 a.m");
+        horario20.setHasta("01:00 a.m");
+
+        horario21.setDesde("02:00 a.m");
+        horario21.setHasta("03:00 a.m");
+
+
+        horarios.add(horario1);
+        horarios.add(horario2);
+        horarios.add(horario3);
+        horarios.add(horario4);
+        horarios.add(horario5);
+        horarios.add(horario6);
+        horarios.add(horario7);
+        horarios.add(horario8);
+        horarios.add(horario9);
+        horarios.add(horario10);
+        horarios.add(horario11);
+        horarios.add(horario12);
+        horarios.add(horario13);
+        horarios.add(horario14);
+        horarios.add(horario15);
+        horarios.add(horario16);
+        horarios.add(horario17);
+        horarios.add(horario18);
+        horarios.add(horario19);
+        horarios.add(horario20);
+        horarios.add(horario21);
     }
 
 

@@ -35,13 +35,14 @@ public class CanchaReservaAdapter extends RecyclerView.Adapter<CanchaReservaAdap
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView canchaName;
-        TextView canchaPrecio;
+        TextView precioD, precioN ;
         TextView canchaTipo;
 
         public ViewHolder(final View itemView) {
             super(itemView);
             canchaName = itemView.findViewById(R.id.cancha_name);
-            canchaPrecio = itemView.findViewById(R.id.cancha_precio);
+            precioD = itemView.findViewById(R.id.cancha_precioD);
+            precioN = itemView.findViewById(R.id.cancha_precioN);
             canchaTipo = itemView.findViewById(R.id.cancha_tipo);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -66,7 +67,8 @@ public class CanchaReservaAdapter extends RecyclerView.Adapter<CanchaReservaAdap
         Cancha item = items.get(position);
 
         holder.canchaName.setText(item.getName());
-        holder.canchaPrecio.setText("S/." + String.valueOf(item.getPrecio()));
+        holder.precioD.setText("S/." + String.valueOf(item.getPrecioD()));
+        holder.precioN.setText("S/." + String.valueOf(item.getPrecioD()));
         holder.canchaTipo.setText(item.getTipo());
     }
 

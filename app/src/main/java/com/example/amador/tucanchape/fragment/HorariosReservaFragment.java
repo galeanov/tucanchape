@@ -36,6 +36,7 @@ public class HorariosReservaFragment extends Fragment implements HorarioReservaA
     private int posi;
     private String fecha;
     private HorarioReservaFragmentListener listener;
+    private boolean visible;
 
 
     public interface HorarioReservaFragmentListener{
@@ -50,7 +51,7 @@ public class HorariosReservaFragment extends Fragment implements HorarioReservaA
         // Required empty public constructor
     }
 
-    public static HorariosReservaFragment newInstance(final List<Horario> items, final int posi, String fecha) {
+    public static HorariosReservaFragment newInstance(final List<Horario> items, final int posi, String fecha, boolean visible) {
 
         HorariosReservaFragment fragment = new HorariosReservaFragment();
 
@@ -58,6 +59,7 @@ public class HorariosReservaFragment extends Fragment implements HorarioReservaA
         args.putSerializable("horarios", (Serializable) items);
         args.putInt("posi", posi);
         args.putString("fecha", fecha);
+        args.putBoolean("visible", visible);
         fragment.setArguments(args);
 
         return fragment;
@@ -74,8 +76,9 @@ public class HorariosReservaFragment extends Fragment implements HorarioReservaA
             items = (List<Horario>) getArguments().getSerializable("horarios");
             posi = getArguments().getInt("posi");
             fecha = getArguments().getString("fecha");
+            visible = getArguments().getBoolean("visible");
         }
-        adapter = new HorarioReservaAdapter(getContext(),items, fecha);
+        adapter = new HorarioReservaAdapter(getContext(),items, fecha, visible);
         adapter.setListener(this);
         rvHorarios = view.findViewById(R.id.rv_horarios);
         rvHorarios.setAdapter(adapter);
@@ -98,15 +101,25 @@ public class HorariosReservaFragment extends Fragment implements HorarioReservaA
 
         if(val) {
             final EditText input = new EditText(getContext());
+            final EditText inputSiglas = new EditText(getContext());
+
+            LinearLayout layout = new LinearLayout(getContext());
+            layout.setOrientation(LinearLayout.VERTICAL);
 
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.MATCH_PARENT);
 
             input.setLayoutParams(lp);
+            input.setHint("Ingrese nombres y apellidos");
+            inputSiglas.setLayoutParams(lp);
+            inputSiglas.setHint("Ingrese siglas del nombre");
+
+            layout.addView(input);
+            layout.addView(inputSiglas);
 
             new AlertDialog.Builder(getContext())
-                    .setView(input)
+                    .setView(layout)
                     .setTitle("Nueva Reserva")
                     .setMessage("Ingrese el nombre de quien reserva")
                     .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
@@ -118,13 +131,14 @@ public class HorariosReservaFragment extends Fragment implements HorarioReservaA
                     .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            if (!input.getText().toString().equals("")) {
+                            if (!input.getText().toString().equals("") && !inputSiglas.getText().toString().equals("")) {
                                 if (items.get(posi).getReservas() == null)
                                     items.get(posi).setReservas(new ArrayList<Reserva>());
 
                                 Reserva reserva = new Reserva();
                                 reserva.setFecha(fecha);
                                 reserva.setReservado(input.getText().toString());
+                                reserva.setSiglas(inputSiglas.getText().toString());
                                 items.get(posi).getReservas().add(reserva);
 
                                 adapter.notifyDataSetChanged();

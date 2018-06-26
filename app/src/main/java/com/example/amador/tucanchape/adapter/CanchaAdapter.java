@@ -37,14 +37,16 @@ public class CanchaAdapter extends RecyclerView.Adapter<CanchaAdapter.ViewHolder
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView canchaName;
-        TextView canchaPrecio;
+        TextView precioD;
+        TextView precioN;
         TextView canchaTipo;
         ImageView delete;
 
         public ViewHolder(final View itemView) {
             super(itemView);
             canchaName = itemView.findViewById(R.id.cancha_name);
-            canchaPrecio = itemView.findViewById(R.id.cancha_precio);
+            precioD = itemView.findViewById(R.id.canchaD);
+            precioN = itemView.findViewById(R.id.canchaN);
             canchaTipo = itemView.findViewById(R.id.cancha_tipo);
             delete = itemView.findViewById(R.id.icon_delete);
             delete.setOnClickListener(new View.OnClickListener() {
@@ -76,8 +78,10 @@ public class CanchaAdapter extends RecyclerView.Adapter<CanchaAdapter.ViewHolder
         Cancha item = items.get(position);
 
         holder.canchaName.setText(item.getName());
-        holder.canchaPrecio.setText("S/." + String.valueOf(item.getPrecio()));
+        holder.precioD.setText("S/." + String.valueOf(item.getPrecioD()));
+        holder.precioN.setText("S/." + String.valueOf(item.getPrecioN()));
         holder.canchaTipo.setText(item.getTipo());
+
     }
 
     @Override

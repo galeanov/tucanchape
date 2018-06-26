@@ -7,6 +7,22 @@
     android:background="#FFF"
     tools:context=".fragment.CanchaFragment">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/colorPrimaryDark">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Canchas"
+            android:textSize="18dp"
+            android:textColor="@color/cardview_light_background"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal"/>
+
+    </LinearLayout>
+
     <include layout="@layout/content_canchas_reserva" />
 
 

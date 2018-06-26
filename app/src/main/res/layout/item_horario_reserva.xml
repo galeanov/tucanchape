@@ -5,18 +5,18 @@
     android:layout_height="wrap_content">
 
     <RelativeLayout
-        android:padding="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/icon_status"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_marginLeft="18dp"
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:background="@drawable/shape_enabled"/>
+            android:background="@drawable/shape_enabled" />
 
         <LinearLayout
             android:layout_marginLeft="15dp"
@@ -25,26 +25,36 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/icon_status"
             android:layout_toLeftOf="@+id/sw_status"
-            android:layout_centerVertical="true">
+            >
 
             <TextView
                 android:id="@+id/horario_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="10:00 a.m. a 11:00 a.m."
-                android:textSize="14dp"
-                android:textStyle="bold"/>
+                android:textSize="16dp"
+                android:layout_marginLeft="30dp"
+                android:textStyle="bold" />
 
             <TextView
+                android:layout_marginLeft="51dp"
                 android:id="@+id/usuario_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Gonzalo Perez"
+                android:text="Amador Galeano"
+                android:textSize="12dp" />
+
+            <TextView
+                android:layout_marginLeft="51dp"
+                android:id="@+id/siglas_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="AJGV"
                 android:textSize="12dp" />
 
         </LinearLayout>
 
-        <Switch
+        <CheckBox
             android:id="@+id/sw_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -53,6 +63,131 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="50dp"
+            android:background="#f5f5f5" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     </RelativeLayout>

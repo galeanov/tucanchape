@@ -6,16 +6,18 @@ import java.util.List;
 public class Cancha implements Serializable{
 
     String name;
-    Double precio;
+    Double precioD;
+    Double precioN;
     String tipo;
     List<Horario> horarios;
 
     public Cancha() {
     }
 
-    public Cancha(String name, Double precio, String tipo, List<Horario> horarios) {
+    public Cancha(String name, Double precioD, Double precioN, String tipo, List<Horario> horarios) {
         this.name = name;
-        this.precio = precio;
+        this.precioD = precioD;
+        this.precioN = precioN;
         this.tipo = tipo;
         this.horarios = horarios;
     }
@@ -28,20 +30,20 @@ public class Cancha implements Serializable{
         this.name = name;
     }
 
-    public List<Horario> getHorarios() {
-        return horarios;
+    public Double getPrecioD() {
+        return precioD;
     }
 
-    public void setHorarios(List<Horario> horarios) {
-        this.horarios = horarios;
+    public void setPrecioD(Double precioD) {
+        this.precioD = precioD;
     }
 
-    public Double getPrecio() {
-        return precio;
+    public Double getPrecioN() {
+        return precioN;
     }
 
-    public void setPrecio(Double precio) {
-        this.precio = precio;
+    public void setPrecioN(Double precioN) {
+        this.precioN = precioN;
     }
 
     public String getTipo() {
@@ -52,11 +54,20 @@ public class Cancha implements Serializable{
         this.tipo = tipo;
     }
 
+    public List<Horario> getHorarios() {
+        return horarios;
+    }
+
+    public void setHorarios(List<Horario> horarios) {
+        this.horarios = horarios;
+    }
+
     @Override
     public String toString() {
         return "Cancha{" +
                 "name='" + name + '\'' +
-                ", precio=" + precio +
+                ", precioD=" + precioD +
+                ", precioN=" + precioN +
                 ", tipo='" + tipo + '\'' +
                 ", horarios=" + horarios +
                 '}';

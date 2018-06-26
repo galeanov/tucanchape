@@ -34,7 +34,7 @@
 
         android:textColor="@color/colorPrimaryDark"
         android:textSize="24sp"
-        android:layout_marginTop="240dp"
+        android:layout_marginTop="260dp"
         android:textStyle="bold" />
 
     <LinearLayout
@@ -65,7 +65,7 @@
             android:id="@+id/btn_user"
             android:layout_width="200dp"
             android:layout_height="30dp"
-            android:background="@drawable/bordeslugar"
+            android:background="@color/colorPrimaryDark"
             android:text="Buscar canchas"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textColor="@color/cardview_light_background" />
@@ -82,7 +82,7 @@
             android:layout_width="200dp"
             android:layout_height="30dp"
             android:background="@drawable/bordeslugar"
-            android:text="Registra tu cancha"
+            android:text="Modo Administrador"
             android:layout_marginTop="5dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textColor="@color/cardview_light_background" />

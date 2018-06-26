@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.amador.tucanchape.R;
 import com.example.amador.tucanchape.adapter.CanchaReservaAdapter;
@@ -42,6 +43,7 @@ public class MenuAdminActivity extends AppCompatActivity implements NavigationVi
     private Menu menu;
     private EmpresaFragment empresaFragment;
     private boolean menuVal = false;
+    private FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,7 +101,9 @@ public class MenuAdminActivity extends AppCompatActivity implements NavigationVi
                 }
 
                 @Override
-                public void onCancelled(DatabaseError databaseError) {}
+                public void onCancelled(DatabaseError databaseError) {
+                    Toast.makeText(MenuAdminActivity.this, "Estamos presentando de conexión, le pedimos que lo intente de nuevo", Toast.LENGTH_LONG).show();
+                }
             });
         }else{
             goLoginScreen();
@@ -178,7 +182,10 @@ public class MenuAdminActivity extends AppCompatActivity implements NavigationVi
             manager.beginTransaction().replace(R.id.escenario, CanchaFragment.newInstance()).commit();
         } else if (id == R.id.nav_reserva) {
             menu.findItem(R.id.action_editar).setVisible(false);
-            manager.beginTransaction().replace(R.id.escenario, CanchaReservaFragment.newInstance()).commit();
+            FirebaseAuth mAuth = FirebaseAuth.getInstance();
+            user = mAuth.getCurrentUser();
+            if (user != null)
+                manager.beginTransaction().replace(R.id.escenario, CanchaReservaFragment.newInstance(user.getUid(), R.id.escenario)).commit();
         }else if (id == R.id.nav_logout) {
             mAuth.signOut();
             prefs.logout();

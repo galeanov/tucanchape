@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 
 import android.widget.TextView;
@@ -121,7 +122,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void validate(String nombres, String pass){
+    private void validate(final String nombres, final String pass){
         progressDialog.setMessage("Ingresando al sistema");
         progressDialog.show();
         firebaseAuth.signInWithEmailAndPassword(nombres, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {

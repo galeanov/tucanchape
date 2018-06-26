@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="false"
+    android:background="@color/colorwhite"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".fragment.UserBuscarFragment">
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"/>
+
+    <LinearLayout
+        android:id="@+id/lay"
+        android:background="@color/colorwhite"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <EditText
+            android:id="@+id/search_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:hint="Busca tu cancha"
+            android:padding="15dp"
+            android:textSize="15dp" />
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/no_result"
+        android:visibility="gone"
+        android:background="@color/colorwhite"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textAllCaps="true"
+        android:gravity="center"
+        android:padding="20dp"
+        android:textSize="20sp"
+        android:text="No se han encontrado empresas con ese nombre, intente con otra busqueda"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:visibility="gone"
+        android:focusable="false"
+        android:id="@+id/rv_busqueda"
+        android:background="@color/colorwhite"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/lay">
+
+    </android.support.v7.widget.RecyclerView>
+
+</RelativeLayout>
