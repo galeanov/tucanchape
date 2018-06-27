@@ -85,7 +85,6 @@ public class HorarioReservaAdapter extends RecyclerView.Adapter<HorarioReservaAd
         holder.sw_status.setChecked(false);
         holder.sw_status.setVisibility(visible?View.VISIBLE:View.GONE);
         holder.usuario_name.setVisibility(View.GONE);
-        holder.siglas_name.setVisibility(View.GONE);
 
         if(item.getReservas()!=null) {
             for (Reserva reserva : item.getReservas()) {
@@ -93,9 +92,7 @@ public class HorarioReservaAdapter extends RecyclerView.Adapter<HorarioReservaAd
                     holder.icon_status.setBackground(ctx.getDrawable(R.drawable.shape_disabled));
                     holder.sw_status.setChecked(true);
                     holder.usuario_name.setText(reserva.getReservado());
-                    holder.siglas_name.setText(reserva.getSiglas());
-                    holder.siglas_name.setVisibility(View.GONE);
-                    holder.usuario_name.setVisibility(visible? View.VISIBLE:View.GONE);
+                    holder.usuario_name.setVisibility(View.VISIBLE);
                 }
             }
         }

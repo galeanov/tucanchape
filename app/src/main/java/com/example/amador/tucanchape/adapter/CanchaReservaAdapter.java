@@ -41,8 +41,8 @@ public class CanchaReservaAdapter extends RecyclerView.Adapter<CanchaReservaAdap
         public ViewHolder(final View itemView) {
             super(itemView);
             canchaName = itemView.findViewById(R.id.cancha_name);
-            precioD = itemView.findViewById(R.id.cancha_precioD);
-            precioN = itemView.findViewById(R.id.cancha_precioN);
+            precioD = itemView.findViewById(R.id.canchaD);
+            precioN = itemView.findViewById(R.id.canchaN);
             canchaTipo = itemView.findViewById(R.id.cancha_tipo);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

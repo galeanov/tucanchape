@@ -63,7 +63,7 @@
                 android:textStyle="bold"
                 android:layout_marginLeft="17dp"/>
             <TextView
-                android:id="@+id/cancha_precioD"
+                android:id="@+id/canchaD"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:text="S./20"
@@ -87,7 +87,7 @@
                 android:textStyle="bold"
                 android:layout_marginLeft="17dp"/>
             <TextView
-                android:id="@+id/cancha_precioN"
+                android:id="@+id/canchaN"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:text="S./80"
